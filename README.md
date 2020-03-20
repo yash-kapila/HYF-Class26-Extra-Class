@@ -5,8 +5,8 @@ HYF Class26 Extra Class
 ## Topics
 
 - APIs
-- Promises
 - JSON
+- Promises
 
 ## Application Programming Interface(API)
 
@@ -99,4 +99,148 @@ const main = () => {
 main();
 ```
 
+## JSON
+
+In a typical web application, there is always a communication required between client(browser) and server(just another computer running a program). While we write client side applications using JavaScript, the program running on the server can be written in any other language(Java, .NET, PHP etc).
+
+Thus, in order for both programs to communicate(using APIs :wink:), there should be a method which is understandable by both. Previously, XML used to be one of the ways of sharing information between client and server. But nowadays, JSON is considered as a preferable way of communicating and exchanging information.
+
+JavaScript Object Notation (JSON) is a standard text-based format for representing structured data based on _JavaScript object_ syntax. Even though it closely resembles JavaScript object literal syntax, it can be used independently from it.
+
+### Example
+
+```json
+{
+  "squadName": "Super hero squad",
+  "homeTown": "Metro City",
+  "formed": 2016,
+  "secretBase": "Super tower",
+  "active": true,
+  "members": [
+    {
+      "name": "Molecule Man",
+      "age": 29,
+      "secretIdentity": "Dan Jukes",
+      "powers": [
+        "Radiation resistance",
+        "Turning tiny",
+        "Radiation blast"
+      ]
+    },
+    {
+      "name": "Madame Uppercut",
+      "age": 39,
+      "secretIdentity": "Jane Wilson",
+      "powers": [
+        "Million tonne punch",
+        "Damage resistance",
+        "Superhuman reflexes"
+      ]
+    },
+    {
+      "name": "Eternal Flame",
+      "age": 1000000,
+      "secretIdentity": "Unknown",
+      "powers": [
+        "Immortality",
+        "Heat Immunity",
+        "Inferno",
+        "Teleportation",
+        "Interdimensional travel"
+      ]
+    }
+  ]
+}
+```
+
+If you open https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json in the browser, you will see response coming in a JSON format.
+
+This means is that there is a program running on a machine which is reachable via mdn.github.io and when it receives a request `learning-area/javascript/oojs/json`, it executes a function which returns us the JSON we see on browser.
+
+### JSON Manipulations
+
+Sometimes, there are situations when we receive a raw JSON as a string or need to convert a JSON to a string for easy transfer among programs. Thus, JavaScript provides a global JSON object which provides two methods to fulfil the purpose.
+
+- `parse()` - Accepts a JSON string as a parameter, and returns the corresponding JavaScript object.
+- `stringify()` - Accepts an object as a parameter, and returns the equivalent JSON string form.
+
+### Notes:
+
+- JSON is purely **a data format** — it contains only properties, no methods.
+- JSON requires double quotes to be used around strings and property names. Single quotes are not valid.
+- Even a single misplaced comma or colon can cause a JSON file to go wrong, and not work.
+
+For example, below is a valid JavaScript object but not a JSON
+
+```javascript
+{
+	name: 'Yash Kapila',
+	age: 30,
+}
+```
+
+while the following is a valid JSON
+
+```json
+{
+	"name": "Yash Kapila",
+	"age": 30
+}
+```
+
 ## Promises
+
+### Why
+
+Asynchronous Programming is a crucial component of web development using JavaScript. This is because JavaScript is a single threaded by nature and hence can do only one thing at a time. Without async programming, if we were to fetch some data through an API from backend, we couldn't do anything else and our web page might appear frozen.
+
+We have already seen and used several ways to achieve asynchronous programming so far. DOM Event Listeners, setTimeout, setInterval and callbacks are different ways to achieve asynchronous programming.
+
+A question may arise in your head asking why do we need promises when we have callbacks already for async programming in JavaScript. A good question and the answer to it lies in the following example.
+
+Imagine, you have to do task A and upon its completion do task B and upon B's completion, do task C and so on. Our code might look like this:
+
+```javascript
+finishTaskA(function(err, done) {
+	if (err) {
+		console.log('Error');
+	} else {
+		finishTaskB(function(err, done) {
+			if (err) {
+				console.log('Error');
+			} else {
+				finishTaskC(function(err, done) {
+					if (err) {
+						console.log('Error');
+					} else {
+						// and so on
+					}
+				});
+			}
+		})
+	}
+})
+```
+
+Needless to say but you can see how ugly this code is and uglier it can soon get. This is also known as **callback hell** or **callback pyramid**.
+
+Let's see how this could might look if we used promises instead:
+
+```javascript
+finishTaskA()
+	.then(function() {
+		return finishTaskB();
+	})
+	.then(function() {
+		return finishTaskC();
+	})
+	.catch(function(err) {
+		console.log('Error');
+	})
+```
+
+We can surely compare the two approaches and tell which is perhaps easier and less prone to bugs.
+
+### What
+
+### How
